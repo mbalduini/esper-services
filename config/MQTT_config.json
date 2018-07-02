@@ -1,0 +1,11 @@
+{
+  "type":"MQTTStreamManager",
+  "eventName":"testEvent",
+  "connectionInfo": {
+    "host":"localhost",
+    "port":"61613",
+    "username":"admin",
+    "password":"password",
+    "topic":"brembo_topic"
+  }
+}

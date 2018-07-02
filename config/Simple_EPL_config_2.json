@@ -1,0 +1,3 @@
+{
+  "eplQuery":"select varId,value from testEvent.win:time_batch(5 sec)"
+}

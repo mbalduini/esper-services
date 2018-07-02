@@ -1,0 +1,6 @@
+{
+  "serverConfig" : {
+      "port" : 3456,
+      "cepURI" : "http://www.fluxedo.com/cep/brembo"
+  }
+}
