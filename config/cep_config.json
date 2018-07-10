@@ -1,0 +1,18 @@
+{
+  "cepURI" : "http://www.fluxedo.com/cep/brembo",
+  "JDBCConnections":[
+    {
+      "connectionName":"testConnectionMySQL",
+      "driver":"com.mysql.cj.jdbc.Driver",
+      "url":"jdbc:mysql://localhost:3306/test-db?serverTimezone=UTC",
+      "username":"root",
+      "password":"qwerty"
+    },{
+      "connectionName":"testConnectionSQLServer",
+      "driver":"com.microsoft.sqlserver.jdbc.SQLServerDriver",
+      "url":"jdbc:sqlserver://0.0.0.0:1433;DatabaseName=test",
+      "username":"SA",
+      "password":"SqLsEr4TeStInG!"
+    }
+  ]
+}

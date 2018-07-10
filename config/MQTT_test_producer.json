@@ -1,0 +1,11 @@
+{
+  "sourceFilePath":"/Users/baldo/Documents/Work/git/brembo_poc/resources/data/dati-brembo/streaming-data-as-single-json.json",
+  "sleepInterval":1000,
+  "connectionInfo": {
+    "host":"localhost",
+    "port":61613,
+    "username":"admin",
+    "password":"password",
+    "topic":"brembo_topic"
+  }
+}

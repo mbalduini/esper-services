@@ -1,4 +1,4 @@
-package com.fluxedo.es.test;
+package com.fluxedo.es;
 
 import com.jsoniter.JsonIterator;
 import com.jsoniter.output.JsonStream;

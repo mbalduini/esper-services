@@ -1,0 +1,28 @@
+{
+  "dataPath":"/Users/baldo/Documents/Work/git/brembo_poc/resources/data/dati-brembo/streaming-data-as-single-json.json",
+  "producerSleep":1000,
+  "mqttConnectionInfo": {
+    "host":"localhost",
+    "port":61613,
+    "username":"admin",
+    "password":"password",
+    "topic":"brembo_topic"
+  },
+  "dataSchema": [{
+        "fieldName": "varId",
+        "fieldType": "int"
+      },
+      {
+        "fieldName": "value",
+        "fieldType": "double"
+      },
+      {
+        "fieldName": "devSn",
+        "fieldType": "String"
+      },
+      {
+        "fieldName": "onTime",
+        "fieldType": "String"
+      }
+    ],
+}

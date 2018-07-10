@@ -1,4 +1,4 @@
-package com.fluxedo.es.test;
+package com.fluxedo.es;
 
 import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;
@@ -8,6 +8,7 @@ import com.jsoniter.ValueType;
 import com.jsoniter.any.Any;
 import com.jsoniter.output.JsonStream;
 import org.apache.avro.Schema;
+import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericDatumReader;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.io.DatumReader;
@@ -28,52 +29,52 @@ import java.util.concurrent.TimeUnit;
 public class AvroTest {
 
     public static void main(String[] args) throws IOException {
-        Schema schema = new Schema.Parser().parse(new File("/Users/baldo/Documents/Work/git/brembo_poc/resources/restServerUtils/brembo-schema.json"));
+        Schema schema = new Schema.Parser().parse(new File("/Users/baldo/Documents/Work/git/brembo_poc/resources/restServerUtils/brembo-schema-2.json"));
 
-        List<HashMap> events = prepareData("/Users/baldo/Documents/Work/git/brembo_poc/resources/data/dati-brembo/streaming-data-as-single-json.json");
+        List<HashMap> events = prepareData("/Users/baldo/Documents/Work/git/brembo_poc/resources/data/dati-brembo/streaming-data-as-single-json-single-event.json");
         String input = JsonStream.serialize(events.get(0));
         Any tempEvent = JsonIterator.deserialize(input);
 
-//        try {
-//
-//            String inputString = tempEvent.toString();
-//            InputStream inputStream = new ByteArrayInputStream(inputString.getBytes());
-//            DataInputStream din = new DataInputStream(inputStream);
-//
-//            Decoder decoder = DecoderFactory.get().jsonDecoder(schema, din);
-//
-//            DatumReader<GenericRecord> reader = new GenericDatumReader<GenericRecord>(schema);
-//            GenericRecord datum = reader.read(null, decoder);
-//
-//            System.out.println();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            System.out.println();
-//        }
+        try {
 
-        Any valueList = tempEvent.get("telemetryDataList");
+            String inputString = tempEvent.toString();
+            InputStream inputStream = new ByteArrayInputStream(inputString.getBytes());
+            DataInputStream din = new DataInputStream(inputStream);
 
-        for (Any record : valueList) {
-            try {
+            Decoder decoder = DecoderFactory.get().jsonDecoder(schema, din);
 
-                InputStream inputStr = new ByteArrayInputStream(record.toString().getBytes());
-                DataInputStream din = new DataInputStream(inputStr);
+            DatumReader<GenericRecord> reader = new GenericDatumReader<GenericRecord>(schema);
+            GenericRecord datum = reader.read(null, decoder);
 
-                Decoder decoder = DecoderFactory.get().jsonDecoder(schema, din);
-
-                DatumReader<GenericRecord> reader = new GenericDatumReader<GenericRecord>(schema);
-                GenericRecord datum = reader.read(null, decoder);
-                datum.put("devSN", "abc");
-
-//                datum.put("onTime", "abc");
-//                datum.put("unixTs", "abc");
-
-                System.out.println();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            System.out.println();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println();
         }
+
+//        Any valueList = tempEvent.get("telemetryDataList");
+//
+//        for (Any record : valueList) {
+//            try {
+//
+//                InputStream inputStr = new ByteArrayInputStream(record.toString().getBytes());
+//                DataInputStream din = new DataInputStream(inputStr);
+//
+//                Decoder decoder = DecoderFactory.get().jsonDecoder(schema, din);
+//
+//                DatumReader<GenericRecord> reader = new GenericDatumReader<GenericRecord>(schema);
+//                GenericRecord datum = reader.read(null, decoder);
+//                datum.put("devSN", "abc");
+//
+////                datum.put("onTime", "abc");
+////                datum.put("unixTs", "abc");
+//
+//                System.out.println();
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
 
 
 

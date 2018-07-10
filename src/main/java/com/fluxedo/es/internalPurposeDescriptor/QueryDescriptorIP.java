@@ -8,17 +8,28 @@ import java.util.HashMap;
  * Created by Marco Balduini on 19/06/2018 as part of project esperservices.
  */
 public class QueryDescriptorIP {
+
+    private String cepURI;
     private EPStatement epStatement;
     private HashMap <String, ConsumerDescriptorIP> consumers = new HashMap<>();
 
-    public QueryDescriptorIP(EPStatement epStatement) {
+    public QueryDescriptorIP(String cepURI, EPStatement epStatement) {
+        this.cepURI = cepURI;
         this.epStatement = epStatement;
     }
 
-    public QueryDescriptorIP(EPStatement eps, HashMap <String, ConsumerDescriptorIP> consumers) {
-        this.epStatement = eps;
+    public QueryDescriptorIP(String cepURI, EPStatement epStatement, HashMap<String, ConsumerDescriptorIP> consumers) {
+        this.cepURI = cepURI;
+        this.epStatement = epStatement;
         this.consumers = consumers;
+    }
 
+    public String getCepURI() {
+        return cepURI;
+    }
+
+    public void setCepURI(String cepURI) {
+        this.cepURI = cepURI;
     }
 
     public EPStatement getEpStatement() {
@@ -29,11 +40,11 @@ public class QueryDescriptorIP {
         this.epStatement = epStatement;
     }
 
-    public HashMap <String, ConsumerDescriptorIP> getConsumers() {
+    public HashMap<String, ConsumerDescriptorIP> getConsumers() {
         return consumers;
     }
 
-    public void setConsumers(HashMap <String, ConsumerDescriptorIP> consumers) {
+    public void setConsumers(HashMap<String, ConsumerDescriptorIP> consumers) {
         this.consumers = consumers;
     }
 

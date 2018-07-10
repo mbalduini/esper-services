@@ -1,4 +1,4 @@
-package com.fluxedo.es.commons;
+package com.fluxedo.es.throughputTest.MQTT.bremboEvent;
 
 /**
  * Created by Marco Balduini on 23/05/2018 as part of project brembo_poc.

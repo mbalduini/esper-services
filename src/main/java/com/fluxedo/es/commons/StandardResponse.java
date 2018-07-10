@@ -1,5 +1,7 @@
 package com.fluxedo.es.commons;
 
+import spark.Response;
+
 /**
  * Created by Marco Balduini on 18/06/2018 as part of project esperservices.
  */
@@ -16,10 +18,12 @@ public class StandardResponse {
     public StandardResponse(StatusResponse status, String message) {
         this.status = status;
         this.message = message;
+        this.data = new String();
     }
 
     public StandardResponse(StatusResponse status, Object data) {
         this.status = status;
+        this.message = new String();
         this.data = data;
     }
 

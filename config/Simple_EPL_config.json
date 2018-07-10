@@ -1,3 +1,4 @@
 {
+  "cepURI" : "http://www.fluxedo.com/cep/brembo",
   "eplQuery":"select * from testEvent.win:time_batch(5 sec)"
 }

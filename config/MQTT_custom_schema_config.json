@@ -1,0 +1,29 @@
+{
+  "cepURI" : "http://www.fluxedo.com/cep/brembo",
+  "type":"MQTTStreamManager",
+  "eventName":"streamEvent",
+  "dataSchema": [{
+        "fieldName": "varId",
+        "fieldType": "int"
+      },
+      {
+        "fieldName": "value",
+        "fieldType": "double"
+      },
+      {
+        "fieldName": "devSn",
+        "fieldType": "String"
+      },
+      {
+        "fieldName": "onTime",
+        "fieldType": "String"
+      }
+    ],
+  "connectionInfo": {
+    "host":"localhost",
+    "port":61613,
+    "username":"admin",
+    "password":"password",
+    "topic":"brembo_topic"
+  }
+}

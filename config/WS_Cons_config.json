@@ -1,0 +1,8 @@
+{
+  "type":"WebSocketConsumer",
+  "eplQueryName":"stmt_1",
+  "wsConfig":{
+    "wsServerBaseUri":"ws://localhost:3457",
+    "wsEndpointName":"/testWs"
+  }
+}
