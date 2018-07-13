@@ -89,9 +89,21 @@ public class EPLTest {
                     "]";
             cep.getEPAdministrator().createEPL(insertQuery);
 
-            String eplQuery = "SELECT varId, value, ITEMID, onTime, STARTDATETIME, ENDDATETIME FROM streamEvent.win:time_batch(1 sec) AS s JOIN statiDataInMemoryTable AS t on s.devSn = t.bb_s_n";
+            String deleteFromTables = "ON PATTERN [every timer:interval(5)] " +
+                    "SELECT and DELETE * FROM statiDataInMemoryTable " +
+                    "WHERE cast(STARTDATETIME, long, dateformat: 'yyyy-MM-dd HH:dd:ss') < cast('2018-03-26 02:32:49', long, dateformat: 'yyyy-MM-dd HH:dd:ss')";
+            cep.getEPAdministrator().createEPL(deleteFromTables);
+
+            String eplQuery = "SELECT varId, value, ITEMID, onTime, STARTDATETIME, ENDDATETIME " +
+                    "FROM streamEvent.win:time_batch(1 sec) AS s JOIN statiDataInMemoryTable AS t on s.devSn = t.bb_s_n";
             EPStatement cepStatement = cep.getEPAdministrator().createEPL(eplQuery);
-            cepStatement.addListener(new ConsoleConsumer());
+//            cepStatement.addListener(new ConsoleConsumer());
+
+            String test = "SELECT STARTDATETIME FROM statiDataInMemoryTable " +
+                    "output snapshot every 4 sec " +
+                    "order by cast(STARTDATETIME, long, dateformat: 'yyyy-MM-dd HH:dd:ss') asc";
+            cep.getEPAdministrator().createEPL(test).addListener(new ConsoleConsumer());
+
 //            JDBCPerformanceConsumer jdbcc = new JDBCPerformanceConsumer();
 //            jdbcc.initialize(new String(Files.readAllBytes(Paths.get("/Users/baldo/Documents/Work/git/esper-services/config/JDBC_Cons_config.json"))));
 //            cepStatement.addListener(jdbcc);

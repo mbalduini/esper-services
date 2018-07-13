@@ -10,7 +10,7 @@ import com.jsoniter.any.Any;
  */
 public class ConsoleConsumer extends Consumer {
 
-    private boolean sampling = true;
+    private boolean sampling = false;
 
     public ConsoleConsumer() {
         super();
