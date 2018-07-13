@@ -23,6 +23,7 @@ public class MQTTStreamManager extends StreamManager {
     private String topicId;
     private MQTT mqtt;
     private String eventName;
+    private Thread strThread;
 
     private Any config;
 
@@ -40,7 +41,7 @@ public class MQTTStreamManager extends StreamManager {
         this.topicId = ci.get("topic").toString();
         this.eventName = config.get("eventName").toString();
 
-       mqtt = new MQTT();
+        mqtt = new MQTT();
         try {
             mqtt.setHost(ci.get("host").toString(), ci.get("port").toInt());
             mqtt.setUserName(ci.get("username").toString());
@@ -159,10 +160,16 @@ public class MQTTStreamManager extends StreamManager {
 
         };
 
-        new Thread(mqttStr).start();
+        strThread = new Thread(mqttStr);
+        strThread.start();
 
         return true;
 
+    }
+
+    @Override
+    public void stopStream() {
+        strThread.interrupt();
     }
 
     @Override

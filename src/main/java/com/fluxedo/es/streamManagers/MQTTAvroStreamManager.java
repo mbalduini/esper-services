@@ -35,6 +35,7 @@ public class MQTTAvroStreamManager extends StreamManager {
     private MQTT mqtt;
     private String dataSchema;
     private String eventName;
+    private Thread strThread;
 
     public MQTTAvroStreamManager() {
     }
@@ -133,10 +134,17 @@ public class MQTTAvroStreamManager extends StreamManager {
             }
         };
 
-        new Thread(mqttStr).start();
+
+        strThread = new Thread(mqttStr);
+        strThread.start();
 
         return true;
 
+    }
+
+    @Override
+    public void stopStream() {
+        strThread.interrupt();
     }
 
     @Override

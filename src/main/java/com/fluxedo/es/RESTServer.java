@@ -69,7 +69,13 @@ public class RESTServer {
                 configFilePath = "./config/config.json";
             }
 
-            Any serverConfig = JsonIterator.deserialize(new String(Files.readAllBytes(Paths.get(configFilePath))));
+            Any serverConfig;
+
+            try{
+                serverConfig = JsonIterator.deserialize(new String(Files.readAllBytes(Paths.get(configFilePath))));
+            } catch (Exception e) {
+                serverConfig = JsonIterator.deserialize(new String(Files.readAllBytes(Paths.get("config.json"))));
+            }
 
             String log4jConf = serverConfig.get("logConfigurator").toString();
             if(log4jConf != null || !log4jConf.isEmpty())
@@ -106,6 +112,20 @@ public class RESTServer {
             }
 
             logger.info("Rest Server started on port: {}. Websocket Server started on port: {}", serverConfig.get("port").toInt(), wsPort);
+
+            get("/", (request, response) -> {
+                String message;
+
+                message = "SERVER IS RUNNING!!!!";
+                logger.info(message);
+
+//                    TimeUnit.MILLISECONDS.sleep(2000);
+
+                response.type("application/json");
+                response.status(HttpStatus.CREATED_201);
+
+                return JsonStream.serialize(new StandardResponse(StatusResponse.SUCCESS, message));
+            });
 
             //CEP
 
@@ -271,6 +291,7 @@ public class RESTServer {
 
                     StreamDescriptorIP sdi = new StreamDescriptorIP(config.get("cepURI").toString(), sm);
 
+                    String test = sm.getStream().getName();
                     streamList.put(sm.getStream().getName(), sdi);
 
                     message = sm.getStream().getName() + " successfully registered";
@@ -365,7 +386,10 @@ public class RESTServer {
 
                     if (cepList.get(config.get("cepURI").toString()) == null)
                         throw new CEPNotFoundException("A CEP with the specified URi is not yet instantiated.");
+
                     EPServiceProvider cep = cepList.get(config.get("cepURI").toString()).getCep();
+
+                    streamList.get(config.get("eventName").toString()).getSm().stopStream();
 
                     cep.getEPAdministrator().getConfiguration().removeEventType(config.get("eventName").toString(), config.get("force").toBoolean());
                     streamList.remove(config.get("eventName").toString());
@@ -444,7 +468,10 @@ public class RESTServer {
 
                     if (cepList.get(config.get("cepURI").toString()) == null)
                         throw new CEPNotFoundException("A CEP with the specified URi is not yet instantiated.");
+
                     EPServiceProvider cep = cepList.get(config.get("cepURI").toString()).getCep();
+
+                    streamList.get(request.params(":name")).getSm().stopStream();
 
                     cep.getEPAdministrator().getConfiguration().removeEventType(request.params(":name"), config.get("force").toBoolean());
                     streamList.remove(request.params(":name"));
@@ -546,7 +573,7 @@ public class RESTServer {
 
                     for ( QueryDescriptorIP qd : qdList){
 
-                       ArrayList<ConsumerDescriptor> cm = new ArrayList<>();
+                        ArrayList<ConsumerDescriptor> cm = new ArrayList<>();
                         for (ConsumerDescriptorIP cd : qd.getConsumers().values()){
                             cm.add(new ConsumerDescriptor(cd.getId(), cd.getEPLQueryName(), cd.getType()));
                         }

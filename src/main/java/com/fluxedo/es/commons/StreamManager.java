@@ -10,5 +10,6 @@ public abstract class StreamManager {
 
     public abstract void initialize(EPServiceProvider cep, String configuration);
     public abstract boolean createStream();
+    public abstract void stopStream();
     public abstract EventType getStream();
 }
